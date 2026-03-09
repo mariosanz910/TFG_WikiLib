@@ -18,8 +18,8 @@ WORKDIR /app
 # Copiar el JAR compilado desde la etapa de build
 COPY --from=build /app/target/wikilib-0.0.1-SNAPSHOT.jar app.jar
 
-# Exponer el puerto
-EXPOSE 8085
+# Exponer el puerto (Render usa la variable PORT)
+EXPOSE ${PORT:-8085}
 
-# Comando para ejecutar la aplicación
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Comando para ejecutar la aplicación con la variable PORT
+ENTRYPOINT ["sh", "-c", "java -Dserver.port=${PORT:-8085} -jar app.jar"]
