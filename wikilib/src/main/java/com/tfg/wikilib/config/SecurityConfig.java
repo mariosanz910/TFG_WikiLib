@@ -47,8 +47,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         // Rutas públicas (sin autenticación)
-                        .requestMatchers("/", "/login", "/registro", "/catalogo/**", "/entrada/**", "/css/**", "/js/**",
-                                "/error")
+                        .requestMatchers("/login", "/registro", "/catalogo/**", "/entrada/**", "/css/**", "/js/**", "/error")
                         .permitAll()
 
                         // Rutas para ADMIN
@@ -115,4 +114,5 @@ public class SecurityConfig {
             }
         };
     }
+
 }
