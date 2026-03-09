@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel del Redactor - WikiLib</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #f4f1ea;
+            font-family: 'Cormorant Garamond', serif;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: #ffffff;
+            border: 1px solid #d6d1c4;
+            border-radius: 6px;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: 600;
+            color: #3e3a34;
+        }
+
+        .header-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #8c7a5b;
+            border: 1px solid #8c7a5b;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-family: 'Cormorant Garamond', serif;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #6f6148;
+        }
+
+        .btn-danger {
+            background-color: #b85450;
+            border-color: #b85450;
+        }
+
+        .btn-danger:hover {
+            background-color: #a04440;
+        }
+
+        .btn-secondary {
+            background-color: #9a9186;
+            border-color: #9a9186;
+        }
+
+        .btn-secondary:hover {
+            background-color: #7d756b;
+        }
+
+        .btn-small {
+            padding: 6px 14px;
+            font-size: 14px;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .panel-header h2 {
+            font-size: 26px;
+            font-weight: 600;
+            color: #3e3a34;
+        }
+
+        .tabla-entradas {
+            background-color: #ffffff;
+            border: 1px solid #d6d1c4;
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #8c7a5b;
+            color: white;
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #e8e5dd;
+            font-size: 16px;
+            color: #3e3a34;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: #faf8f4;
+        }
+
+        .badge {
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .badge-categoria {
+            background-color: #8c7a5b;
+            color: white;
+        }
+
+        .badge-publicado {
+            background-color: #5c7a4d;
+            color: white;
+        }
+
+        .acciones {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .header-links {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .panel-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .tabla-entradas {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 600px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>WikiLib - Panel del Redactor</h1>
+        <div class="header-links">
+            <a href="/catalogo" class="btn btn-secondary">Catálogo</a>
+            <a href="/login" class="btn btn-secondary">Cerrar Sesión</a>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="panel-header">
+            <h2>Mis Entradas</h2>
+            <a href="/redactor/entrada/crear" class="btn">Nueva Entrada</a>
+        </div>
+
+        <!-- Tabla de entradas -->
+        <div th:if="${!entradas.isEmpty()}" class="tabla-entradas">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Categoría</th>
+                        <th>Valoración</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="entrada : ${entradas}">
+                        <td th:text="${entrada.titulo}">Título</td>
+                        <td>
+                            <span th:if="${entrada.categoria != null}" class="badge badge-categoria"
+                                th:text="${entrada.categoria.nombre}">Categoría</span>
+                            <span th:if="${entrada.categoria == null}" style="color:#8c7a5b">Sin categoría</span>
+                        </td>
+                        <td th:text="${entrada.valoracion}">0</td>
+                        <td class="acciones">
+                            <a th:href="@{/entrada/{id}(id=${entrada.id})}" class="btn btn-secondary btn-small">Ver</a>
+
+                            <form th:action="@{/redactor/entrada/{id}/eliminar(id=${entrada.id})}" method="post"
+                                style="display:inline;" onsubmit="return confirm('¿Eliminar esta entrada?')">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                <button type="submit" class="btn btn-danger btn-small">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</body>
+
+</html>

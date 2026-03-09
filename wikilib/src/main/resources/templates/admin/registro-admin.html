@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Administrador - WikiLib</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4f1ea;
+            font-family: 'Cormorant Garamond', serif;
+            padding: 20px 0;
+        }
+
+        .card {
+            width: 400px;
+            padding: 40px 35px;
+            background-color: white;
+            border: 1px solid #d6d1c4;
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 26px;
+            font-weight: 600;
+            color: #3e3a34;
+        }
+
+        .field {
+            margin-bottom: 18px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #c8c2b5;
+            border-radius: 4px;
+            font-size: 16px;
+            font-family: 'Cormorant Garamond', serif;
+            background-color: #faf8f4;
+            color: #3e3a34;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #8c7a5b;
+            background-color: white;
+        }
+
+        select.input-field {
+            cursor: pointer;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #8c7a5b;
+            background-color: #8c7a5b;
+            color: white;
+            font-size: 16px;
+            font-family: 'Cormorant Garamond', serif;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #6f6148;
+        }
+
+        .error {
+            background-color: #f8e5e5;
+            border: 1px solid #d8a8a8;
+            padding: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #7a2e2e;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .registro-link {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 15px;
+            color: #3e3a34;
+        }
+
+        .registro-link a {
+            color: #8c7a5b;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .registro-link a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width:420px) {
+            .card {
+                width: 90%;
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <h4 class="title">Registrar Nuevo Administrador</h4>
+
+        <div th:if="${error}" class="error" th:text="${error}"></div>
+
+        <form th:action="@{/admin/registro}" method="post" th:object="${usuario}">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+            <div class="field">
+                <input class="input-field" type="text" th:field="*{nombreUsuario}" placeholder="Nombre de usuario"
+                    required />
+            </div>
+
+            <div class="field">
+                <input class="input-field" type="email" th:field="*{email}" placeholder="Email" required />
+            </div>
+
+            <div class="field">
+                <input class="input-field" type="text" th:field="*{nombreCompleto}"
+                    placeholder="Nombre completo (opcional)" />
+            </div>
+
+            <div class="field">
+                <input class="input-field" type="password" th:field="*{password}" placeholder="Contraseña" required />
+            </div>
+
+            <!-- Solo ADMIN puede asignar el rol ADMIN -->
+            <input type="hidden" th:field="*{rol}" value="ADMIN" />
+
+            <button class="btn" type="submit">Registrar Administrador</button>
+        </form>
+
+        <div class="registro-link">
+            <p><a th:href="@{/admin/entradas}">Volver al panel de administración</a></p>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Página no encontrada - WikiLib</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            min-height:100vh;
+            background-color:#f4f1ea;
+            font-family:'Cormorant Garamond', serif;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+
+            padding:20px;
+        }
+
+        .error-card{
+
+            background-color:white;
+
+            border:1px solid #d6d1c4;
+            border-radius:6px;
+
+            padding:45px;
+
+            max-width:600px;
+            width:100%;
+
+            text-align:center;
+
+            box-shadow:0 4px 15px rgba(0,0,0,0.08);
+
+        }
+
+        .error-code{
+
+            font-size:64px;
+            font-weight:600;
+
+            color:#8c7a5b;
+
+            margin-bottom:10px;
+
+        }
+
+        .error-title{
+
+            font-size:28px;
+
+            color:#3e3a34;
+
+            margin-bottom:15px;
+
+        }
+
+        .error-text{
+
+            font-size:18px;
+
+            color:#3e3a34;
+
+            line-height:1.6;
+
+            margin-bottom:30px;
+
+        }
+
+        .actions{
+
+            display:flex;
+            justify-content:center;
+            gap:15px;
+
+            flex-wrap:wrap;
+
+        }
+
+        .btn{
+
+            padding:10px 24px;
+
+            border:1px solid #8c7a5b;
+
+            background-color:#8c7a5b;
+
+            color:white;
+
+            border-radius:4px;
+
+            cursor:pointer;
+
+            font-size:16px;
+
+            text-decoration:none;
+
+            transition:background-color 0.2s ease;
+
+        }
+
+        .btn:hover{
+
+            background-color:#6f6148;
+
+        }
+
+        .btn-secondary{
+
+            background-color:#9a9186;
+            border-color:#9a9186;
+
+        }
+
+        .btn-secondary:hover{
+
+            background-color:#7d756b;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="error-card">
+
+    <div class="error-code">404</div>
+
+    <h1 class="error-title">Página no encontrada</h1>
+
+    <p class="error-text">
+        La página que intentas visitar no existe o ha sido movida dentro de WikiLib.
+    </p>
+
+    <div class="actions">
+
+        <a href="/" class="btn">Ir al inicio</a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

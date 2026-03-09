@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Entradas - WikiLib Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #f4f1ea;
+            font-family: 'Cormorant Garamond', serif;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: #ffffff;
+            border: 1px solid #d6d1c4;
+            border-radius: 6px;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: 600;
+            color: #3e3a34;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .page-header h2 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #3e3a34;
+        }
+
+        .page-header span {
+            color: #8c7a5b;
+            font-size: 16px;
+        }
+
+        .filtros {
+            background-color: #ffffff;
+            border: 1px solid #d6d1c4;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filtros select {
+            padding: 10px 14px;
+            border: 1px solid #c8c2b5;
+            border-radius: 4px;
+            font-size: 16px;
+            font-family: 'Cormorant Garamond', serif;
+            background-color: #faf8f4;
+            color: #3e3a34;
+        }
+
+        .filtros select:focus {
+            outline: none;
+            border-color: #8c7a5b;
+            background-color: #ffffff;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 1px solid #8c7a5b;
+            background-color: #8c7a5b;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-family: 'Cormorant Garamond', serif;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #6f6148;
+        }
+
+        .btn-danger {
+            background-color: #b85450;
+            border-color: #b85450;
+        }
+
+        .btn-danger:hover {
+            background-color: #a04440;
+        }
+
+        .btn-secondary {
+            background-color: #9a9186;
+            border-color: #9a9186;
+        }
+
+        .btn-secondary:hover {
+            background-color: #7d756b;
+        }
+
+        .btn-small {
+            padding: 6px 14px;
+            font-size: 14px;
+        }
+
+        .tabla-entradas {
+            background-color: #ffffff;
+            border: 1px solid #d6d1c4;
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #8c7a5b;
+            color: white;
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #e8e5dd;
+            font-size: 16px;
+            color: #3e3a34;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: #faf8f4;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .badge-categoria {
+            background-color: #8c7a5b;
+            color: white;
+        }
+
+        .valoracion-positiva {
+            color: #5c7a4d;
+            font-weight: 600;
+        }
+
+        .valoracion-negativa {
+            color: #b85450;
+            font-weight: 600;
+        }
+
+        .acciones {
+            display: flex;
+            gap: 6px;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .filtros {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filtros form {
+                flex-direction: column !important;
+            }
+
+            .tabla-entradas {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>WikiLib - Administración</h1>
+        <div class="header-actions">
+            <a href="/admin/registro" class="btn btn-secondary"
+                style="background-color: #8c7a5b; border-color: #8c7a5b; color: white;">Registrar Administrador</a>
+            <a href="/catalogo" class="btn btn-secondary">Catálogo</a>
+            <a href="/login" class="btn btn-secondary">Cerrar Sesión</a>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="page-header">
+            <h2>Gestión de Entradas Publicadas</h2>
+            <span th:text="'Total: ' + ${entradas.size()} + ' entradas'"></span>
+        </div>
+
+        <!-- Filtros -->
+        <div class="filtros">
+            <form action="/admin/entradas" method="get" style="display:flex; gap:15px; flex-wrap:wrap; width:100%;">
+                <select name="orden" onchange="this.form.submit()">
+                    <option value="recientes" th:selected="${orden == 'recientes'}">Más recientes</option>
+                    <option value="mas-valoradas" th:selected="${orden == 'mas-valoradas'}">Más valoradas</option>
+                    <option value="menos-valoradas" th:selected="${orden == 'menos-valoradas'}">Menos valoradas</option>
+                </select>
+
+                <select name="categoriaId" onchange="this.form.submit()">
+                    <option value="">Todas las categorías</option>
+                    <option th:each="cat : ${categorias}" th:value="${cat.id}" th:text="${cat.nombre}"
+                        th:selected="${categoriaSeleccionada != null and categoriaSeleccionada == cat.id}">
+                        Categoría
+                    </option>
+                </select>
+
+                <a href="/admin/entradas" class="btn btn-secondary">Limpiar</a>
+            </form>
+        </div>
+
+        <!-- Tabla de entradas -->
+        <div th:if="${!entradas.isEmpty()}" class="tabla-entradas">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Autor</th>
+                        <th>Categoría</th>
+                        <th>Valoración</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="entrada : ${entradas}">
+                        <td th:text="${entrada.titulo}">Título</td>
+                        <td th:text="${entrada.usuario.nombreUsuario}">Autor</td>
+                        <td>
+                            <span th:if="${entrada.categoria != null}" class="badge badge-categoria"
+                                th:text="${entrada.categoria.nombre}">Categoría</span>
+                            <span th:if="${entrada.categoria == null}" style="color:#8c7a5b">Sin categoría</span>
+                        </td>
+                        <td>
+                            <span
+                                th:classappend="${entrada.valoracion > 0 ? 'valoracion-positiva' : (entrada.valoracion < 0 ? 'valoracion-negativa' : '')}"
+                                th:text="${entrada.valoracion}">0</span>
+                        </td>
+                        <td class="acciones">
+                            <a th:href="@{/entrada/{id}(id=${entrada.id})}" class="btn btn-small">Ver</a>
+
+                            <form th:action="@{/admin/entrada/{id}/eliminar(id=${entrada.id})}" method="post"
+                                style="display:inline;" onsubmit="return confirm('¿Eliminar esta entrada?')">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                <button type="submit" class="btn btn-danger btn-small">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</body>
+
+</html>

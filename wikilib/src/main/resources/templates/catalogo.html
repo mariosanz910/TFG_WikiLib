@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo - WikiLib</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #f4f1ea;
+            font-family: 'Cormorant Garamond', serif;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: #ffffff;
+            border: 1px solid #d6d1c4;
+            border-radius: 6px;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .header h1 {
+            font-size: 36px;
+            font-weight: 600;
+            color: #3e3a34;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 18px;
+            color: #8c7a5b;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #8c7a5b;
+            border: 1px solid #8c7a5b;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-family: 'Cormorant Garamond', serif;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #6f6148;
+        }
+
+        .btn-secondary {
+            background-color: #9a9186;
+            border-color: #9a9186;
+        }
+
+        .btn-secondary:hover {
+            background-color: #7d756b;
+        }
+
+        .filters {
+            background-color: #ffffff;
+            border: 1px solid #d6d1c4;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filters form {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+
+        .filters input,
+        .filters select {
+            padding: 12px;
+            border: 1px solid #c8c2b5;
+            border-radius: 4px;
+            font-size: 16px;
+            font-family: 'Cormorant Garamond', serif;
+            background-color: #faf8f4;
+            color: #3e3a34;
+        }
+
+        .filters input {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filters input:focus,
+        .filters select:focus {
+            outline: none;
+            border-color: #8c7a5b;
+            background-color: #ffffff;
+        }
+
+        .filters select {
+            min-width: 180px;
+        }
+
+        .entradas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .entrada-card {
+            background-color: #ffffff;
+            border: 1px solid #d6d1c4;
+            border-radius: 6px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .entrada-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .entrada-titulo {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #3e3a34;
+        }
+
+        .entrada-preview {
+            color: #8c7a5b;
+            margin-bottom: 15px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .entrada-meta {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            font-size: 14px;
+        }
+
+        .badge {
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .badge-categoria {
+            background-color: #8c7a5b;
+            color: white;
+        }
+
+        .badge-valoracion {
+            background-color: #5c7a4d;
+            color: white;
+        }
+
+        .badge-autor {
+            background-color: #7a8fa0;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .nav-bar {
+                justify-content: center;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+
+            .filters form {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .filters input,
+            .filters select {
+                width: 100%;
+            }
+
+            .entradas-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>WikiLib - Catálogo</h1>
+        <p>Descubre y aprende con entradas de conocimiento compartidas por la comunidad</p>
+    </div>
+
+    <div class="container">
+
+        <!-- Navegación -->
+        <div class="nav-bar">
+            <a sec:authorize="hasRole('REDACTOR')" href="/redactor/panel" class="btn">Panel del Redactor</a>
+            <a sec:authorize="hasRole('ADMIN')" href="/admin/entradas" class="btn">Panel de Admin</a>
+            <a sec:authorize="isAuthenticated()" href="/login" class="btn btn-secondary">Cerrar Sesión</a>
+            <a sec:authorize="!isAuthenticated()" href="/login" class="btn">Iniciar Sesión</a>
+            <a sec:authorize="!isAuthenticated()" href="/registro" class="btn btn-secondary">Registrarse</a>
+        </div>
+
+        <!-- Filtros de búsqueda -->
+        <div class="filters">
+            <form action="/catalogo" method="get">
+                <input type="text" name="buscar" th:value="${buscar}" placeholder="Buscar entradas por título...">
+                <select name="categoriaId" onchange="this.form.submit()">
+                    <option value="">Todas las categorías</option>
+                    <option th:each="cat : ${categorias}" th:value="${cat.id}" th:text="${cat.nombre}"
+                        th:selected="${categoriaSeleccionada != null and categoriaSeleccionada == cat.id}">
+                        Categoría
+                    </option>
+                </select>
+                <button type="submit" class="btn">Buscar</button>
+                <a href="/catalogo" class="btn btn-secondary">Limpiar</a>
+            </form>
+        </div>
+
+        <!-- Grid de entradas -->
+        <div th:if="${!entradas.isEmpty()}" class="entradas-grid">
+            <a th:each="entrada : ${entradas}" th:href="@{/entrada/{id}(id=${entrada.id})}" class="entrada-card">
+
+                <div class="entrada-titulo" th:text="${entrada.titulo}">Título</div>
+
+                <div class="entrada-preview"
+                    th:text="${entrada.contenido.length() > 150 ? entrada.contenido.substring(0, 150) + '...' : entrada.contenido}">
+                    Preview del contenido
+                </div>
+
+                <div class="entrada-meta">
+                    <span th:if="${entrada.categoria != null}" class="badge badge-categoria"
+                        th:text="${entrada.categoria.nombre}">Categoría</span>
+
+                    <span class="badge badge-autor" th:text="${entrada.usuario.nombreUsuario}">Autor</span>
+
+                    <span class="badge badge-valoracion" th:text="'Valoración: ' + ${entrada.valoracion}">0</span>
+                </div>
+            </a>
+        </div>
+
+    </div>
+</body>
+
+</html>

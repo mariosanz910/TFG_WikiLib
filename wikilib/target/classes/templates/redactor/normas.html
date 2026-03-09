@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Normas de Publicación - WikiLib</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #f4f1ea;
+            font-family: 'Cormorant Garamond', serif;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: #ffffff;
+            border: 1px solid #d6d1c4;
+            border-radius: 6px;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: 600;
+            color: #3e3a34;
+        }
+
+        .header a {
+            color: #8c7a5b;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .header a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .rules-card {
+            background-color: #ffffff;
+            border: 1px solid #d6d1c4;
+            border-radius: 6px;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .rules-card h2 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #3e3a34;
+            margin-bottom: 20px;
+        }
+
+        .rules-section {
+            margin-bottom: 30px;
+        }
+
+        .rules-section h3 {
+            font-size: 20px;
+            color: #3e3a34;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #d6d1c4;
+            padding-bottom: 5px;
+        }
+
+        .rules-section p {
+            font-size: 17px;
+            color: #3e3a34;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .rules-section ul {
+            padding-left: 20px;
+        }
+
+        .rules-section li {
+            margin-bottom: 8px;
+            font-size: 17px;
+            color: #3e3a34;
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 24px;
+            border: 1px solid #8c7a5b;
+            background-color: #8c7a5b;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: 'Cormorant Garamond', serif;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-back:hover {
+            background-color: #6f6148;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .rules-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>WikiLib - Normas de Publicación</h1>
+    <a href="/redactor/panel">Volver al panel</a>
+</div>
+
+<div class="container">
+
+    <div class="rules-card">
+
+        <h2>Normas para redactores</h2>
+
+        <div class="rules-section">
+            <h3>1. Objetivo de la plataforma</h3>
+            <p>
+                WikiLib es una plataforma destinada a la creación y publicación de contenido informativo de calidad.
+                Las entradas deben aportar valor educativo, cultural o informativo a los lectores.
+            </p>
+        </div>
+
+        <div class="rules-section">
+            <h3>2. Normas de redacción</h3>
+            <ul>
+                <li>Utiliza un lenguaje claro, formal y comprensible.</li>
+                <li>Evita faltas de ortografía y errores gramaticales.</li>
+                <li>No utilices lenguaje ofensivo o discriminatorio.</li>
+                <li>Evita escribir todo el texto en mayúsculas.</li>
+            </ul>
+        </div>
+
+        <div class="rules-section">
+            <h3>3. Estructura de los artículos</h3>
+            <ul>
+                <li>El título debe describir claramente el contenido del artículo.</li>
+                <li>El contenido debe estar organizado y ser fácil de leer.</li>
+                <li>Utiliza párrafos bien estructurados.</li>
+                <li>Procura que la información sea objetiva y verificable.</li>
+            </ul>
+        </div>
+
+        <div class="rules-section">
+            <h3>4. Contenido no permitido</h3>
+            <ul>
+                <li>Contenido ofensivo, discriminatorio o violento.</li>
+                <li>Información falsa o engañosa.</li>
+                <li>Plagio o contenido copiado sin autorización.</li>
+                <li>Publicidad o promoción no autorizada.</li>
+            </ul>
+        </div>
+
+        <div class="rules-section">
+            <h3>5. Consecuencias</h3>
+            <p>
+                Si una publicación no cumple con las normas establecidas en WikiLib,
+                los administradores o moderadores podrán tomar medidas para mantener
+                la calidad del contenido de la plataforma.
+            </p>
+            <ul>
+                <li>La entrada podrá ser revisada por moderadores.</li>
+                <li>El contenido podrá ser modificado si no cumple las normas.</li>
+                <li>La publicación podrá ser eliminada si infringe las reglas.</li>
+            </ul>
+        </div>
+
+        <a href="/redactor/panel" class="btn-back">Volver al panel</a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

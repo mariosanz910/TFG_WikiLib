@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Entrada - WikiLib</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #f4f1ea;
+            font-family: 'Cormorant Garamond', serif;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: #ffffff;
+            border: 1px solid #d6d1c4;
+            border-radius: 6px;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: 600;
+            color: #3e3a34;
+        }
+
+        .header a {
+            color: #8c7a5b;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .header a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-card {
+            background-color: #ffffff;
+            border: 1px solid #d6d1c4;
+            border-radius: 6px;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-card h2 {
+            font-size: 26px;
+            font-weight: 600;
+            color: #3e3a34;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #3e3a34;
+            font-size: 16px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #c8c2b5;
+            border-radius: 4px;
+            font-size: 16px;
+            font-family: 'Cormorant Garamond', serif;
+            background-color: #faf8f4;
+            color: #3e3a34;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #8c7a5b;
+            background-color: #ffffff;
+        }
+
+        .form-group textarea {
+            min-height: 350px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border: 1px solid #8c7a5b;
+            background-color: #8c7a5b;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: 'Cormorant Garamond', serif;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #6f6148;
+        }
+
+        .btn-secondary {
+            background-color: #9a9186;
+            border-color: #9a9186;
+        }
+
+        .btn-secondary:hover {
+            background-color: #7d756b;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .form-card {
+                padding: 30px 20px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>WikiLib - Nueva Entrada</h1>
+        <a href="/redactor/panel">Volver al panel</a>
+    </div>
+
+    <a href="/redactor/normas" class="btn" >Ver Normas de publicación</a>
+
+
+    <div class="container">
+        <div class="form-card">
+            <h2>Publicar Nueva Entrada</h2>
+
+            <form th:action="@{/redactor/entrada/crear}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+                <div class="form-group">
+                    <label for="titulo">Título</label>
+                    <input type="text" id="titulo" name="titulo" placeholder="Escribe el título de la entrada" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoriaId">Categoría</label>
+                    <select id="categoriaId" name="categoriaId" required>
+                        <option value="">Selecciona una categoría</option>
+                        <option th:each="cat : ${categorias}" th:value="${cat.id}" th:text="${cat.nombre}">
+                            Categoría
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="contenido">Contenido</label>
+                    <textarea id="contenido" name="contenido" placeholder="Escribe el contenido de la entrada aquí..."
+                        required></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn">Publicar</button>
+                    <a href="/redactor/panel" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
